@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="ADVDISC Machine Project" content="">
+		<meta name="Team AJOY" content="">
+
+		<title>ADVDISC Machine Project</title>
+		<!-- Bootstrap core CSS -->
+		<link href="css/bootstrap.css"				rel="stylesheet">
+		<link href="css/bootstrap-toggle.min.css" 	rel="stylesheet">
+		<link href="css/main.css" 					rel="stylesheet">
+		<link href="css/jquery.contextMenu.css"		rel="stylesheet">
+		<script src="js/jquery-1.11.3.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="content" class="container">
+			<div id="controls" class="col-lg-3" id="input">
+				<!--
+				<label>Dimensions:</label>
+				<select class="select" id="dimensions">
+					<option value="2d">2D</option>
+					<option value="3d">3D</option>
+				</select>
+				-->
+				<!--
+				<ul id="draw-list" class="nav nav-tabs">
+					
+					<li class="active"><a data-toggle="tab" href="#inputPoint">Point</a></li>
+					<li><a data-toggle="tab" href="#inputVector">Vector</a></li>
+					<li class="3d"><a data-toggle="tab" href="#inputVertices">Vertices</a></li>
+				</ul>
+				-->
+
+				<div class="tab-content">
+					<!-- Input: Point -->
+					<!--
+					<div id="inputPoint" class="tab-pane fade in active">
+						<form class="form-inline">
+							<h4>Draw Point</h4>
+							<input type="hidden" name="type" value="draw_point">
+							<input id="pointX" name="x" class="input form-control" placeholder="X" type="number" step="1" required>
+							<input id="pointY" name="y" class="input form-control" placeholder="Y" type="number" step="1" required>
+							<input id="pointZ" name="z" class="input form-control 3d" placeholder="Y" type="number" step="1" required>
+							<button id="d" class="btn btn-default">Draw</button>
+						</form>
+					</div>
+					-->
+					<!-- Input: Vertices -->
+					<div id="inputVertices" class="tab-pane fade in active">
+						<form class="form-inline">
+							<h4>Vertices</h4>
+							<input type="hidden" name="type" value="draw_vertices">
+							<textarea id="vertices" class="form-control" rows="4" cols="20" placeholder="vertices and faces"></textarea required>
+							<button id="d" class="btn btn-default">Draw</button>
+						</form>
+					</div>
+				</div>
+				
+				<h4>Operations</h4>
+				<div id="operations">
+					<div id="translate">
+						<form class="form-inline">
+							<label>Translate</label></br>
+							<input type="hidden" name="type" value="operation_translate">
+							<input id="translateX" class="input form-control" placeholder="X" type="number" step="1" name="x">
+							<input id="translateY" class="input form-control" placeholder="Y" type="number" step="1" name="y">
+							<input id="translateZ" class="input form-control 3d" placeholder="Z" type="number" step="1" name="z">
+							<button type="submit" class="btn btn-default">Translate</button>
+						</form>
+					</div>
+					
+					<div id="rotate">
+						<form class="form-inline">
+							<label>Rotate</label></br>
+							<input type="hidden" name="type" value="operation_rotate">
+							<input id="rotateDegrees" class="input form-control" placeholder="degrees" type="number" step="0.01" name="val" required>
+							<select class="select 3d" id="rotate-axis">
+								<option value="x">X-Axis</option>
+								<option value="y">Y-Axis</option>
+								<option value="z">Z-Axis</option>
+							</select>
+						 	<button type="submit" class="btn btn-default">Rotate</button>
+						</form>
+					</div>
+		
+					<div id="shear">
+						<form class="form-inline">
+							<label>Shear</label></br>
+							<input type="hidden" name="type" value="operation_shear">
+							<input id="sheara" class="input form-control" placeholder="units" type="number" step=".1" name="val" required>
+							<input id="shearb" class="3d input form-control" placeholder="units" type="number" step=".1" name="val" required>
+							<select class="select-shear-axis" id="shear-axis">
+								<!--<option value="x" class="2d">X-Axis</option>
+								<option value="y" class="2d">Y-Axis</option>-->
+								<option value="xy" class="3d">XY-Axis</option>
+								<option value="xz" class="3d">XZ-Axis</option>
+								<option value="yz" class="3d">YZ-Axis</option>
+							</select>
+						 	<button type="submit" class="btn btn-default">Shear</button>
+						</form>
+					</div>
+
+					<div id="scale">
+						<form class="form-inline">
+							<label>Scale</label></br>
+							<input type="hidden" name="type" value="operation_scale">
+							<input id="nuscaleX" class="input form-control" placeholder="X" type="number" step=".1" name="x" required>
+							<input id="nuscaleY" class="input form-control" placeholder="Y" type="number" step=".1" name="y" required>
+							<input id="nuscaleZ" class="input form-control 3d" placeholder="Z" type="number" step=".1" name="z" required>
+							<button type="submit" class="btn btn-default">Scale</button>
+						</form>
+					</div>
+					
+					<!--
+					<div id="reflect">
+						<form class="form-inline">
+							<label>Reflect</label></br>
+							<input type="hidden" name="type" value="operation_reflect">
+							<select class="select" name="val">
+								<option value="x">X-Axis</option>
+								<option value="y">Y-Axis</option>
+								<option value="xy">X and Y-Axis</option>
+							</select>
+							<button type="submit" class="btn btn-default">Reflect</button>
+						</form>
+					</div>
+					-->
+				</div>
+			</div>
+			
+			<div id="canvasDiv"  class="col-lg-9">
+				<div class="col-lg-12">
+					<h4>Scene</h4>
+					<canvas id="canvas" style="border: 1px solid #999999;" tabindex="1"></canvas>
+				</div>
+				<div id="sceneControls">
+					<div class="pull-left">
+						<button id="scriptAnimation" class="btn btn-default">Animation Script</button>
+						<label>FPS</label>
+						<input id="fps-input" type="number" placeholder="60 is default "></value>
+						<button id="startAnimation" type="button" class="btn btn-default" aria-label="Left Align">
+							<span class="glyphicon glyphicon-play"></span>
+						</button>
+						<button id="stopAnimation" type="button" class="btn btn-default" >
+							<span class="glyphicon glyphicon-stop"></span>
+						</button>
+						<label id="statusAnimation">FPS</label>
+					</div>
+					<div class="pull-right">
+						<button id="clear" class="btn btn-default">Clear</button>
+						<button id="reset" class="btn btn-default">Reset</button>
+						<input id="toggle-original" type="checkbox" data-toggle="toggle" data-on="Original Shown" data-off="Original Hidden">
+					</div>
+				</div>
+			</div>
+			
+			<div id="footer">
+				<div class="centered">
+					<span class="copyright">Copyright &copy; 2017 Albert Lorenz Dizon</span>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-toggle.js"></script>
+		<script type="text/javascript" src="js/jquery.contextMenu.js"></script>
+		<script type="text/javascript" src="js/matrix.js"></script>
+		<script type="text/javascript" src="js/model.js"></script>
+		<script type="text/javascript" src="js/primitives.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/interfacescript.js"></script>
+	</body>
+</html>
